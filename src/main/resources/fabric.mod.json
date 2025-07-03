@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "polydex2eiv",
+  "version": "${version}",
+  "name": "Polydex2EIV",
+  "description": "Bridge Polydex to EIV",
+  "authors": [
+    "稀神灵梦"
+  ],
+  "contact": {
+  },
+  "license": "MIT",
+  "icon": "assets/polydex2eiv/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "cc.thonly.polydex2eiv.Polydex2EIV"
+    ],
+    "client": [
+      "cc.thonly.polydex2eiv.Polydex2EIVClient"
+    ]
+  },
+  "mixins": [
+    "polydex2eiv.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": "*",
+    "minecraft": "~1.21.4",
+    "java": ">=21",
+    "fabric-api": "*",
+    "polymer-core": "*",
+    "eiv": "*",
+    "polydex": "*"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
