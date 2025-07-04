@@ -9,7 +9,6 @@ import net.minecraft.server.WorldGenerationProgressListenerFactory;
 import net.minecraft.util.ApiServices;
 import net.minecraft.world.level.storage.LevelStorage;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -17,7 +16,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.net.Proxy;
 
 @Mixin(MinecraftServer.class)
-@Pseudo
 public class MinecraftServerMixin {
     @Inject(method = "<init>", at = @At("TAIL"))
     public void init(Thread serverThread, LevelStorage.Session session, ResourcePackManager dataPackManager, SaveLoader saveLoader, Proxy proxy, DataFixer dataFixer, ApiServices apiServices, WorldGenerationProgressListenerFactory worldGenerationProgressListenerFactory, CallbackInfo ci) {

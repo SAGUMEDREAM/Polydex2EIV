@@ -79,7 +79,7 @@ public class CustomBytePayloadClient {
             }
         }
 
-        public static void registerHook(String command, PayloadHook hook) {
+        public static void register(String command, PayloadHook hook) {
             HOOKS.put(command, hook);
         }
 

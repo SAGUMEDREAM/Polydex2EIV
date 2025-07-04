@@ -18,6 +18,9 @@
     ],
     "client": [
       "cc.thonly.polydex2eiv.Polydex2EIVClient"
+    ],
+    "eiv": [
+      "cc.thonly.polydex2eiv.PolymerEivIntegration"
     ]
   },
   "mixins": [
@@ -25,7 +28,7 @@
   ],
   "depends": {
     "fabricloader": "*",
-    "minecraft": "~1.21.4",
+    "minecraft": "~1.21.5",
     "java": ">=21",
     "fabric-api": "*",
     "polymer-core": "*",

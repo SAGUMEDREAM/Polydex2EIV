@@ -1,12 +1,15 @@
 package cc.thonly.polydex2eiv;
 
 import cc.thonly.polydex2eiv.network.CustomBytePayload;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import de.crafty.eiv.common.CommonEIVClient;
 import de.crafty.eiv.common.recipe.ItemViewRecipes;
 import eu.pb4.polydex.api.v1.recipe.PolydexEntry;
 import eu.pb4.polydex.api.v1.recipe.PolydexPageUtils;
 import eu.pb4.polydex.impl.PolydexImpl;
 import eu.pb4.polymer.core.api.other.PolymerScreenHandlerUtils;
+import eu.pb4.polymer.core.impl.networking.entry.PolymerItemEntry;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import eu.pb4.polymer.rsm.api.RegistrySyncUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +17,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.fluid.Fluid;
@@ -23,21 +27,22 @@ import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @SuppressWarnings("unchecked")
 public class Polydex2EIV implements ModInitializer {
     public static final String MOD_ID = "polydex2eiv";
+    public static final Gson GSON = new Gson();
     private static MinecraftServer server;
+    private static final List<ItemStack> ITEM_STACKS = new LinkedList<>();
 
     @Override
     public void onInitialize() {
@@ -64,7 +69,7 @@ public class Polydex2EIV implements ModInitializer {
             log.error("Can't make reflection for EIV");
         }
 
-        CustomBytePayload.Receiver.registerHook("on_click_eiv_stack_input", (player, command, data) -> {
+        CustomBytePayload.Receiver.register("on_click_eiv_stack_input", (player, command, data) -> {
             String stringId = new String(data, StandardCharsets.UTF_8).intern();
             Identifier id = Identifier.tryParse(stringId);
             Item item = Registries.ITEM.get(id);
@@ -81,7 +86,7 @@ public class Polydex2EIV implements ModInitializer {
             }
         });
 
-        CustomBytePayload.Receiver.registerHook("on_click_eiv_stack_result", (player, command, data) -> {
+        CustomBytePayload.Receiver.register("on_click_eiv_stack_result", (player, command, data) -> {
             String stringId = new String(data, StandardCharsets.UTF_8).intern();
             Identifier id = Identifier.of(stringId);
             Item item = Registries.ITEM.get(id);

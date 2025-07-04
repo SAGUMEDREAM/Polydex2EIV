@@ -1,18 +1,19 @@
 {
-	"required": true,
-	"package": "cc.thonly.polydex2eiv.mixin",
-	"compatibilityLevel": "JAVA_21",
-	"mixins": [
-		"FluidItemMixin",
-		"MinecraftServerMixin"
-	],
-	"client": [
-		"ItemViewOverlayMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	},
-	"overwrites": {
-		"requireAnnotations": true
+  "required": true,
+  "package": "cc.thonly.polydex2eiv.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "FluidItemMixin",
+    "ItemFiltersMixin",
+    "MinecraftServerMixin"
+  ],
+  "client": [
+    "ItemViewOverlayMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
 	}
 }
